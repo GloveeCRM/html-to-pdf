@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, Get } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { GeneratePDFFromHTMLRequestDto } from './dto/generate-pdf-from-html-request.dto';
@@ -6,6 +6,15 @@ import { GeneratePDFFromHTMLRequestDto } from './dto/generate-pdf-from-html-requ
 @Controller('generate-pdf-from-html')
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  @Get()
+  async sayHelloWorld(@Res() res: Response) {
+    try {
+      res.status(200).send('Hello World');
+    } catch (error) {
+      console.error('Error generating PDF', error);
+      res.status(500).send('Error generating PDF');
+    }
+  }
   @Post()
   async generatePDFFromHTMLHandler(
     @Body() { htmlContent, format }: GeneratePDFFromHTMLRequestDto,
