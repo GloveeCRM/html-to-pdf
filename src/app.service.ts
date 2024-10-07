@@ -5,6 +5,8 @@ import puppeteer from 'puppeteer';
 export class AppService {
   async generatePDFFromHTML(htmlContent: string, format: any): Promise<any> {
     const browser = await puppeteer.launch({
+      headless: 'shell',
+      executablePath: '/usr/bin/chromium-browser',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
