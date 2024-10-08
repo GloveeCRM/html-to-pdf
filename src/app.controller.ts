@@ -5,14 +5,15 @@ import { GeneratePDFFromHTMLRequestDto } from './dto/generate-pdf-from-html-requ
 import { ApiKeyGuard } from './apiKey.guard';
 import { RequestLogService } from './requestLog.service';
 import { ApiKeyService } from './apiKey.service';
+import { RateLimitGuard } from './rateLimit.guard';
 
 @Controller('generate-pdf-from-html')
-@UseGuards(ApiKeyGuard)
+@UseGuards(ApiKeyGuard, RateLimitGuard)
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly requestLogService: RequestLogService,
     private readonly apiKeyService: ApiKeyService,
+    private readonly requestLogService: RequestLogService,
   ) {}
 
   @Post()

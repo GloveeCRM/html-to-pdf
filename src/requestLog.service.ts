@@ -20,4 +20,21 @@ export class RequestLogService {
     const newLog = this.requestLogRepository.create(log);
     await this.requestLogRepository.save(newLog);
   }
+
+  async countRequests({
+    apiKey,
+    endpoint,
+    since,
+  }: {
+    apiKey: string;
+    endpoint: string;
+    since: Date;
+  }): Promise<number> {
+    return this.requestLogRepository
+      .createQueryBuilder('request_log')
+      .where('request_log.apiKey = :apiKey', { apiKey })
+      .andWhere('request_log.endpoint = :endpoint', { endpoint })
+      .andWhere('request_log.requestTime >= :since', { since })
+      .getCount(); // This will count the number of matching rows
+  }
 }
