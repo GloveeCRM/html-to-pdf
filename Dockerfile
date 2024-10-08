@@ -12,7 +12,8 @@ RUN apk add --no-cache \
   freetype \
   harfbuzz \
   ttf-freefont \
-  wget
+  wget \
+  sqlite
 
 RUN npm install
 
