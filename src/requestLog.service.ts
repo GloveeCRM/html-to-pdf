@@ -16,9 +16,10 @@ export class RequestLogService {
     requestMethod: string;
     requestTime: Date;
     apiKey: ApiKey;
-  }): Promise<void> {
+  }): Promise<RequestLog> {
     const newLog = this.requestLogRepository.create(log);
-    await this.requestLogRepository.save(newLog);
+    const savedLog = await this.requestLogRepository.save(newLog);
+    return savedLog;
   }
 
   async countRequests({

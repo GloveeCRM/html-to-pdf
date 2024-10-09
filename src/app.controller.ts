@@ -4,15 +4,14 @@ import { AppService } from './app.service';
 import { GeneratePDFFromHTMLRequestDto } from './dto/generate-pdf-from-html-request.dto';
 import { ApiKeyGuard } from './apiKey.guard';
 import { RequestLogService } from './requestLog.service';
-import { ApiKeyService } from './apiKey.service';
 import { RateLimitGuard } from './rateLimit.guard';
+import { ApiKey } from './apiKey.entity';
 
 @Controller('generate-pdf-from-html')
 @UseGuards(ApiKeyGuard, RateLimitGuard)
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly apiKeyService: ApiKeyService,
     private readonly requestLogService: RequestLogService,
   ) {}
 
@@ -32,21 +31,14 @@ export class AppController {
 
       res.status(200).end(pdfBuffer);
 
-      const apiKeyHeader = req.headers['x-api-key'] as string;
-      const apiKeyEntity =
-        await this.apiKeyService.validateApiKey(apiKeyHeader);
-
-      if (!apiKeyEntity) {
-        console.log('Invalid API Key');
-      } else {
-        const reqLog = await this.requestLogService.logRequest({
-          endpoint: req.url,
-          requestMethod: req.method,
-          requestTime: new Date(),
-          apiKey: apiKeyEntity,
-        });
-        console.log('Request logged', reqLog);
-      }
+      const apiKeyEntity = (req as any).apiKey as ApiKey;
+      const reqLog = await this.requestLogService.logRequest({
+        endpoint: req.url,
+        requestMethod: req.method,
+        requestTime: new Date(),
+        apiKey: apiKeyEntity,
+      });
+      console.log(reqLog);
     } catch (error) {
       console.error('Error generating PDF', error);
       res.status(500).send('Error generating PDF');

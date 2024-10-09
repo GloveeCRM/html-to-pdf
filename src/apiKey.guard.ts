@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ApiKeyService } from './apiKey.service';
 
 @Injectable()
@@ -10,15 +15,16 @@ export class ApiKeyGuard implements CanActivate {
     const apiKey = request.headers['x-api-key'];
 
     if (!apiKey) {
-      return false;
+      throw new ForbiddenException('API key is required');
     }
 
     // Validate the API key
     const validApiKey = await this.apiKeyService.validateApiKey(apiKey);
     if (!validApiKey) {
-      return false;
+      throw new ForbiddenException('Invalid API key');
     }
 
+    request.apiKey = validApiKey;
     return true;
   }
 }
