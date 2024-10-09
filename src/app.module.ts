@@ -11,7 +11,7 @@ import { RequestLog } from './requestLog.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'mydatabase.sqlite',
+      database: '/app/data/db.sqlite',
       entities: [ApiKey, RequestLog],
       synchronize: true,
     }),
