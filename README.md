@@ -42,7 +42,7 @@ For testing purposes, you can use the following API key with a rate limit of 2 r
 
 **Request Body:**
 
-```json
+```bash
 {
   "htmlContent": "<html><body><h1>Hello, World!</h1></body></html>",
   "format": "A4" // (optional, defaults to A4)
