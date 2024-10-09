@@ -21,7 +21,7 @@ This project provides an API service that converts HTML content into a PDF file.
 
 ## Live Demo
 
-You can access the live project at: [htmltopdf.glovee.io](https://htmltopdf.glovee.io)
+You can access the live project at: [htmltopdf.glovee.io/generate-pdf-from-html](htmltopdf.glovee.io/generate-pdf-from-html)
 
 ### Demo API Key
 
