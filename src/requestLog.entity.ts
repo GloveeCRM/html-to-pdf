@@ -16,5 +16,5 @@ export class RequestLog {
   requestMethod: string;
 
   @ManyToOne(() => ApiKey)
-  apiKey: ApiKey; // Many logs can be associated with one API key
+  apiKey: ApiKey;
 }

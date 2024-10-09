@@ -36,6 +36,6 @@ export class RequestLogService {
       .where('request_log.apiKey = :apiKey', { apiKey })
       .andWhere('request_log.endpoint = :endpoint', { endpoint })
       .andWhere('request_log.requestTime >= :since', { since })
-      .getCount(); // This will count the number of matching rows
+      .getCount();
   }
 }
